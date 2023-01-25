@@ -3,6 +3,8 @@ import pk.Faces;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Random;
 
 public class PiratenKarpen {
 
@@ -28,7 +30,24 @@ public class PiratenKarpen {
         int occurrences = Collections.frequency(rolls, Faces.SKULL);
         if(occurrences >= 3){
             System.out.println("Game Over");
-
+        }
+        HashMap<Integer, Dice> dice = new HashMap<Integer, Dice>();
+        dice.put(1,dice1);
+        dice.put(2,dice2);
+        dice.put(4,dice4);
+        dice.put(3,dice4);
+        dice.put(5,dice5);
+        dice.put(6,dice6);
+        dice.put(7,dice7);
+        dice.put(8,dice8);
+        Random r = new Random();
+        int low = 1;
+        int high = 8;
+        while (occurrences<3){
+            int result = r.nextInt(high-low) + low;
+            rolls.set(result,(dice.get(result)).roll());
+            System.out.println(rolls);
+            occurrences =  Collections.frequency(rolls, Faces.SKULL);
         }
 
 
