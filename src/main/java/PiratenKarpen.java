@@ -1,24 +1,37 @@
 import pk.Dice;
+import pk.Faces;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class PiratenKarpen {
 
     public static void turn(){
+        ArrayList<Faces> rolls = new ArrayList<Faces>();
         Dice dice1 = new Dice();
-        System.out.println(dice1.roll());
+        rolls.add(dice1.roll());
         Dice dice2 = new Dice();
-        System.out.println(dice2.roll());
+        rolls.add(dice2.roll());
         Dice dice3 = new Dice();
-        System.out.println(dice3.roll());
+        rolls.add(dice3.roll());
         Dice dice4 = new Dice();
-        System.out.println(dice4.roll());
+        rolls.add(dice4.roll());
         Dice dice5 = new Dice();
-        System.out.println(dice5.roll());
+        rolls.add(dice5.roll());
         Dice dice6 = new Dice();
-        System.out.println(dice6.roll());
+        rolls.add(dice6.roll());
         Dice dice7 = new Dice();
-        System.out.println(dice7.roll());
+        rolls.add(dice7.roll());
         Dice dice8 = new Dice();
-        System.out.println(dice8.roll());
+        rolls.add(dice8.roll());
+        System.out.println(rolls);
+        int occurrences = Collections.frequency(rolls, Faces.SKULL);
+        if(occurrences >= 3){
+            System.out.println("Game Over");
+
+        }
+
+
 
     }
 

@@ -27,11 +27,13 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 
 ### Backlog 
 
-| MVP? | Id  |                      Feature                       | Status | Started  | Delivered |
-|:----:|:---:|:--------------------------------------------------:|:------:|:--------:|:---------:|
-|  x   | F01 |                    Roll a dice                     |   D    | 01/01/23 | 01/01/23  |
-|  x   | F02 |                  Roll eight dices                  |   D    | 01/01/24 | 01/01/24  |
-|  x   | F03 | Player continues to re-roll until getting 3 skulls |   S    | 01/01/24 |    ...    |
-|  x   | F04 |                  Create 2 players                  |   P    |   ...    |    ...    |
-|  x   | F05 |  Calculate Score based on Gold and Diamonds only   | B(FO3) |   ...    |    ...    |
+| MVP? | Id  |                       Feature                       | Status | Started  |  Delivered  |
+|:----:|:---:|:---------------------------------------------------:|:------:|:--------:|:-----------:|
+|  x   | F01 |                     Roll a dice                     |   D    | 01/01/23 |  01/01/23   |
+|  x   | F02 |                  Roll eight dices                   |   D    | 01/01/24 |  01/01/24   |
+|  x   | F03 |         Game ends when player gets 3 skulls         |   D    | 01/01/24 |  01/01/24   |
+|  x   | F04 |       Player randomly chooses dice to re-roll       |   S    | 01/01/24 |     ...     |
+|  x   | F05 | Dice that roll a skull are not able to be re-rolled |   S    | 01/01/24 |     ...     |
+|  x   | F06 |                  Create 2 players                   |   P    |   ...    |     ...     |
+|  x   | F07 |   Calculate Score based on Gold and Diamonds only   | B(FO3) |   ...    |     ...     |
 
