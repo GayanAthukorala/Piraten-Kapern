@@ -5,3 +5,6 @@
 ## 01/01/25
 - User can now re-roll dice randomly, with their turn ending when they have rolled 3 skulls
 - Dice that roll skulls are not able to be rerolled
+
+## 01/01/26
+- Created a player class and moved the turns features into that class
