@@ -34,6 +34,6 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |  x   | F03 |         Game ends when player gets 3 skulls         |   D    | 01/01/24 | 01/01/25  |
 |  x   | F04 |       Player randomly chooses dice to re-roll       |   D    | 01/01/24 | 01/01/25  |
 |  x   | F05 | Dice that roll a skull are not able to be re-rolled |   D    | 01/01/25 | 01/01/25  |
-|  x   | F06 |                  Create 2 players                   |   P    |   ...    |    ...    |
-|  x   | F07 |   Calculate Score based on Gold and Diamonds only   | B(FO3) |   ...    |    ...    |
+|  x   | F06 |                  Create 2 players                   |   s    | 01/01/25 |    ...    |
+|  x   | F07 |   Calculate Score based on Gold and Diamonds only   |   P    |   ...    |    ...    |
 
