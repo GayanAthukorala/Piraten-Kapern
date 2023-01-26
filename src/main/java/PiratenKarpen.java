@@ -12,8 +12,12 @@ public class PiratenKarpen {
         System.out.println("I'm rolling a dice");
         Player player1 = new Player();
         Player player2 = new Player();
-        player1.turn();
-        player2.turn();
+        System.out.println("Player 1----------------");
+        ArrayList p1Rolls = player1.turn();
+        System.out.println("Player 2----------------");
+        ArrayList p2Rolls = player2.turn();
+        System.out.println("Player 1 Score: " +player1.score(p1Rolls) );
+        System.out.println("Player 2 Score: " +player2.score(p2Rolls) );
         System.out.println("That's all folks!");
     }
     

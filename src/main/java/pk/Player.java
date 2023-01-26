@@ -3,7 +3,8 @@ package pk;
 import java.util.*;
 
 public class Player {
-    public HashMap turn(){
+    public ArrayList turn(){
+        ArrayList<Faces> results = new ArrayList<Faces>();
         Dice dice1 = new Dice();
         Dice dice2 = new Dice();
         Dice dice3 = new Dice();
@@ -47,7 +48,7 @@ public class Player {
 
         if(occurrences >= 3){
             System.out.println("Game Over");
-            return rolls;
+            return results;
         }
         System.out.println(rollable);
         Random r = new Random();
@@ -70,8 +71,20 @@ public class Player {
         }
         for (int i = 1; i<9; i++) {
             System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
+            results.add(rolls.get(dice.get(i)));
+
         }
-        return rolls;
+        return results;
+    }
+
+    public int score(ArrayList results){
+        int score = 0;
+        for (int i = 1; i<results.size(); i++) {
+            if((results.get(i)== Faces.GOLD) || (results.get(i)== Faces.DIAMOND)){
+                score += 100;
+            }
+        }
+        return score;
     }
 
 }
