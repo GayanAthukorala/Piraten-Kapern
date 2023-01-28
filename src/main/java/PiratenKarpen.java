@@ -34,8 +34,10 @@ public class PiratenKarpen {
         float p1WinPercent = (p1Wins/42)*100;
         float p2WinPercent = (p2Wins/42)*100;
 
-        System.out.println("Player 1 Win Percentage: " + p1WinPercent +"%");
-        System.out.println("Player 2 Win Percentage: " + p2WinPercent +"%");
+        System.out.printf("Player 1 Win Percentage: %.2f",  p1WinPercent);
+        System.out.println("%\n");
+        System.out.printf("Player 2 Win Percentage: %.2f", p2WinPercent);
+        System.out.println("%\n");
 
     }
 
