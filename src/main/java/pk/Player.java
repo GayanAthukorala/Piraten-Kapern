@@ -37,7 +37,7 @@ public class Player {
         dice.put(8,dice8);
         int occurrences = 0;
         for (int i = 1; i<9; i++) {
-//            System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
+            System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
         }
         for (int i = 1; i<9;i++){
 //            System.out.println(rolls.get(dice.get(i)));
@@ -58,11 +58,11 @@ public class Player {
 //        System.out.println(rollable);
         Random r = new Random();
         while (occurrences<3){
+            System.out.println("Re-rolling");
 //            System.out.println("Rollable Dice: " + rollable);
             ArrayList<Integer> turnRollable = (ArrayList)rollable.clone();
             int numRolls = r.nextInt(rollable.size()-2) + 2;
-
-            for (int i = 1; i < numRolls; i++){
+            for (int i = 0; i < numRolls; i++){
 //                System.out.println("Rollable Dice this Turn: " + turnRollable);
                 int low = 1;
                 int high = turnRollable.size();
@@ -71,7 +71,7 @@ public class Player {
 
 //                System.out.println("Dice getting rerolled is: " + diceNum);
                 rolls.put(dice.get(diceNum),(dice.get(diceNum)).roll());
-//                System.out.println( "dice" + diceNum + " " + rolls.get(dice.get(diceNum)));
+                System.out.println( "dice" + diceNum + " " + rolls.get(dice.get(diceNum)));
                 turnRollable.remove(Integer.valueOf(diceNum));
                 if(rolls.get(dice.get(diceNum))== Faces.SKULL){
                     rollable.remove(Integer.valueOf(diceNum));
@@ -83,8 +83,10 @@ public class Player {
 //            System.out.println("Num skulls: " + occurrences);
 //            System.out.println(rollable);
         }
+        System.out.println("Results:");
+        System.out.println("--------");
         for (int i = 1; i<9; i++) {
-//            System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
+            System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
             results.add(rolls.get(dice.get(i)));
 
         }
@@ -92,11 +94,9 @@ public class Player {
     }
 
     public int score(ArrayList results){
-        System.out.println(results);
         int score = 0;
         for (int i = 0; i<results.size(); i++) {
             if((results.get(i)== Faces.GOLD) || (results.get(i)== Faces.DIAMOND)){
-                System.out.println(results.get(i));
                 score += 100;
             }
         }
