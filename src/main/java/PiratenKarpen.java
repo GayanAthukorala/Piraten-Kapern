@@ -8,11 +8,9 @@ import java.util.*;
 
 public class PiratenKarpen {
 
-    public static void main(String[] args) {
+    public static void runGame(Player player1, Player player2){
         float p1Wins = 0;
         float p2Wins = 0;
-        Player player1 = new Player();
-        Player player2 = new Player();
         for (int i = 0; i<42; i++) {
             int p1Score = 0;
             int p2Score = 0;
@@ -39,7 +37,11 @@ public class PiratenKarpen {
                 p2Wins++;
             }
         }
+        winPercent(p1Wins,p2Wins);
 
+    }
+
+    public static void winPercent(float p1Wins, float p2Wins){
         float p1WinPercent = (p1Wins/42)*100;
         float p2WinPercent = (p2Wins/42)*100;
 
@@ -47,7 +49,12 @@ public class PiratenKarpen {
         System.out.println("%\n");
         System.out.printf("Player 2 Win Percentage: %.2f", p2WinPercent);
         System.out.println("%\n");
+    }
 
+    public static void main(String[] args) {
+        Player player1 = new Player();
+        Player player2 = new Player();
+        runGame(player1, player2);
     }
 
     
