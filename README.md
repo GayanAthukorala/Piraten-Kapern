@@ -46,5 +46,5 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |  x   | F12 |  Player Randomly chooses whether they will re-roll  |   D    | 01/01/28 | 01/01/28  |
 |  x   | F13 |   Player wins a game when they reach 6000 points    |   D    | 01/01/28 | 01/01/28  |
 |  x   | F14 |          Calculate score including combos           |   S    | 01/01/28 |           |
-|  x   | F15 |    Player tries to maximize combos as a strategy    |   D    | 01/01/27 | 01/01/28  |
+|  x   | F15 |    Player tries to maximize combos as a strategy    |   P    |          |           |
 
