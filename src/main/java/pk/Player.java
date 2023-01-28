@@ -49,15 +49,21 @@ public class Player {
 
         if(occurrences >= 3){
             System.out.println("Game Over");
-            for (int i = 0; i<9; i++) {
-//                System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
-                results.add(rolls.get(dice.get(i)));
-            }
             return results;
         }
 //        System.out.println(rollable);
         Random r = new Random();
         while (occurrences<3){
+            int reRoll = r.nextInt(2);
+            if (reRoll == 0){
+                System.out.println("Results:");
+                System.out.println("--------");
+                for (int i = 1; i<9; i++) {
+                    System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
+                    results.add(rolls.get(dice.get(i)));
+                }
+                return results;
+            }
             System.out.println("Re-rolling");
 //            System.out.println("Rollable Dice: " + rollable);
             ArrayList<Integer> turnRollable = (ArrayList)rollable.clone();
@@ -83,13 +89,8 @@ public class Player {
 //            System.out.println("Num skulls: " + occurrences);
 //            System.out.println(rollable);
         }
-        System.out.println("Results:");
-        System.out.println("--------");
-        for (int i = 1; i<9; i++) {
-            System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
-            results.add(rolls.get(dice.get(i)));
 
-        }
+        System.out.println("Busted!");
         return results;
     }
 
