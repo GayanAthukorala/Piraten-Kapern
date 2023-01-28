@@ -8,3 +8,13 @@
 
 ## 01/01/26
 - Created a player class and moved the turns features into that class
+- Calculated player's turn score based on Gold and Diamonds only
+
+## 01/01/27
+- Player rolls at least 2 dice when they re-roll, to adhere to the game rules
+- There are 42 games played and each player's win percentage is displayed at the end
+
+## 01/01/28
+- Player randomly chooses if they will be re-rolling or not
+- Player's scores get continually added after each turn
+- Players go back and forth taking turns until one or both reach a score of 6000

@@ -14,20 +14,29 @@ public class PiratenKarpen {
         Player player1 = new Player();
         Player player2 = new Player();
         for (int i = 0; i<42; i++) {
+            int p1Score = 0;
+            int p2Score = 0;
             System.out.println("Welcome to Piraten Karpen Simulator!");
-            System.out.println("I'm rolling a dice");
-            System.out.println("Player 1----------------");
-            ArrayList p1Rolls = player1.turn();
-            System.out.println("Player 2----------------");
-            ArrayList p2Rolls = player2.turn();
-            System.out.println("Player 1 Score: " + player1.score(p1Rolls));
-            System.out.println("Player 2 Score: " + player2.score(p2Rolls));
-            if (player1.score(p1Rolls) > player2.score(p2Rolls)) {
+            while ((p1Score <6000) && (p2Score <6000)){
+                System.out.println("Player 1----------------");
+                ArrayList p1Rolls = player1.turn();
+                System.out.println("Player 2----------------");
+                ArrayList p2Rolls = player2.turn();
+                System.out.println("Player 1 Score: " + player1.score(p1Rolls));
+                System.out.println("Player 2 Score: " + player2.score(p2Rolls));
+                p1Score += player1.score(p1Rolls);
+                p2Score += player2.score(p2Rolls);
+                System.out.println("Player 1 TOTAL score: " + p1Score );
+                System.out.println("Player 2 TOTAL score: " + p2Score);
+            }
+
+            if (p1Score >= 6000){
+                System.out.println("P1 WIN");
                 p1Wins++;
-                System.out.println("Player 1 Wins!");
-            } else if (player2.score(p2Rolls) > player1.score(p1Rolls)) {
+            }
+            else if (p2Score >= 6000){
+                System.out.println("P2 WIN");
                 p2Wins++;
-                System.out.println("Player 2 Wins!");
             }
         }
 
