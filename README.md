@@ -15,6 +15,9 @@
     * `mvn package`
   * To run the packaged delivery:
     * `java -jar target/piraten-karpen-jar-with-dependencies.jar` 
+  * Trace Mode
+    * To enable Trace mode change `"ERROR` in `Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));`, which is at the top of every method that uses trace, to `"TRACE`
+
 
 Remark: **We are assuming here you are using a _real_ shell (e.g., anything but PowerShell on Windows)**
 

@@ -3,8 +3,16 @@ package pk;
 import java.sql.SQLOutput;
 import java.util.*;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.Configurator;
+
 public class Player {
+    private static final Logger logger = LogManager.getLogger(Player.class);
     public ArrayList turn(){
+        Logger loggerConfig = LogManager.getRootLogger();
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
         ArrayList<Faces> results = new ArrayList<Faces>();
         Dice dice = new Dice();
         int occurrences = 0;
@@ -17,7 +25,7 @@ public class Player {
         }
 
         for (int i = 1; i<9;i++){
-            System.out.println( "dice" + i + " " + rolls.get(i));
+            logger.trace( "dice" + i + " " + rolls.get(i));
             if(rolls.get(i)== Faces.SKULL){
                 rollable.remove(Integer.valueOf(i));
                 occurrences ++;
@@ -25,7 +33,7 @@ public class Player {
         }
 
         if(occurrences >= 3){
-            System.out.println("Game Over");
+            logger.trace("Game Over");
             return results;
         }
 
@@ -34,21 +42,23 @@ public class Player {
     }
 
     public ArrayList<Faces> randomStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Integer> rollable, ArrayList<Faces> results){
+        Logger loggerConfig = LogManager.getRootLogger();
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
         Dice dice = new Dice();
         Random r = new Random();
         while (occurrences<3){
             int reRoll = r.nextInt(2);
             if (reRoll == 0){
-                System.out.println("Results:");
-                System.out.println("--------");
+                logger.trace("Results:");
+                logger.trace("--------");
                 for (int i = 1; i<9; i++) {
-                    System.out.println( "dice" + i + " " + rolls.get(i));
+                    logger.trace( "dice" + i + " " + rolls.get(i));
                     results.add(rolls.get(i));
                 }
                 return results;
             }
 
-            System.out.println("Re-rolling");
+            logger.trace("Re-rolling");
             ArrayList<Integer> turnRollable = (ArrayList)rollable.clone();
 
             int numRolls = r.nextInt(rollable.size()-2) + 2;
@@ -59,7 +69,7 @@ public class Player {
                 int diceNum = turnRollable.get(diceNumIndex);
 
                 rolls.put(diceNum, dice.roll());
-                System.out.println( "dice" + diceNum + " " + rolls.get(diceNum));
+                logger.trace( "dice" + diceNum + " " + rolls.get(diceNum));
                 turnRollable.remove(Integer.valueOf(diceNum));
                 if(rolls.get(diceNum)== Faces.SKULL){
                     rollable.remove(Integer.valueOf(diceNum));
@@ -70,7 +80,7 @@ public class Player {
 //            System.out.println("Num skulls: " + occurrences);
 //            System.out.println(rollable);
         }
-        System.out.println("Busted!");
+        logger.trace("Busted!");
         return results;
 
     }

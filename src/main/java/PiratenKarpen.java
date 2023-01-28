@@ -1,39 +1,45 @@
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.config.Configurator;
 import pk.Dice;
 import pk.Faces;
 import pk.Player;
-
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import javax.swing.plaf.basic.BasicListUI;
 import java.sql.SQLOutput;
 import java.util.*;
 
 public class PiratenKarpen {
 
+    private static final Logger logger = LogManager.getLogger(PiratenKarpen.class);
     public static void runGame(Player player1, Player player2){
+        Logger loggerConfig = LogManager.getRootLogger();
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
         float p1Wins = 0;
         float p2Wins = 0;
         for (int i = 0; i<42; i++) {
             int p1Score = 0;
             int p2Score = 0;
-            System.out.println("Welcome to Piraten Karpen Simulator!");
+            logger.trace("Welcome to Piraten Karpen Simulator!");
             while ((p1Score <6000) && (p2Score <6000)){
-                System.out.println("Player 1----------------");
+                logger.trace("Player 1----------------");
                 ArrayList p1Rolls = player1.turn();
-                System.out.println("Player 2----------------");
+                logger.trace("Player 2----------------");
                 ArrayList p2Rolls = player2.turn();
-                System.out.println("Player 1 Score: " + player1.score(p1Rolls));
-                System.out.println("Player 2 Score: " + player2.score(p2Rolls));
+                logger.trace("Player 1 Score: " + player1.score(p1Rolls));
+                logger.trace("Player 2 Score: " + player2.score(p2Rolls));
                 p1Score += player1.score(p1Rolls);
                 p2Score += player2.score(p2Rolls);
-                System.out.println("Player 1 TOTAL score: " + p1Score );
-                System.out.println("Player 2 TOTAL score: " + p2Score);
+                logger.trace("Player 1 TOTAL score: " + p1Score );
+                logger.trace("Player 2 TOTAL score: " + p2Score);
             }
 
             if (p1Score >= 6000){
-                System.out.println("P1 WIN");
+                logger.trace("P1 WIN");
                 p1Wins++;
             }
             else if (p2Score >= 6000){
-                System.out.println("P2 WIN");
+                logger.trace("P2 WIN");
                 p2Wins++;
             }
         }
