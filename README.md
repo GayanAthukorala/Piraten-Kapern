@@ -37,6 +37,6 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |  x   | F06 |                  Create 2 players                   |   D    | 01/01/25 | 01/01/26  |
 |  x   | F07 |   Calculate Score based on Gold and Diamonds only   |   D    | 01/01/26 | 01/01/26  |
 |  x   | F08 |            Player re-rolls multiple dice            |   D    | 01/01/26 | 01/01/27  |
-|  x   | F09 |               Game is played 42 times               |   S    | 01/01/26 |    ...    |
-|  x   | F10 |         Display each players win percentage         |   S    | 01/01/26 |    ...    |
+|  x   | F09 |               Game is played 42 times               |   D    | 01/01/26 | 01/01/27  |
+|  x   | F10 |         Display each players win percentage         |   P    | 01/01/26 |    ...    |
 

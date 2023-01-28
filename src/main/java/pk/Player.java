@@ -37,7 +37,7 @@ public class Player {
         dice.put(8,dice8);
         int occurrences = 0;
         for (int i = 1; i<9; i++) {
-            System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
+//            System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
         }
         for (int i = 1; i<9;i++){
 //            System.out.println(rolls.get(dice.get(i)));
@@ -50,41 +50,41 @@ public class Player {
         if(occurrences >= 3){
             System.out.println("Game Over");
             for (int i = 0; i<9; i++) {
-                System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
+//                System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
                 results.add(rolls.get(dice.get(i)));
             }
             return results;
         }
-        System.out.println(rollable);
+//        System.out.println(rollable);
         Random r = new Random();
         while (occurrences<3){
-            System.out.println("Rollable Dice: " + rollable);
+//            System.out.println("Rollable Dice: " + rollable);
             ArrayList<Integer> turnRollable = (ArrayList)rollable.clone();
             int numRolls = r.nextInt(rollable.size()-2) + 2;
 
             for (int i = 1; i < numRolls; i++){
-                System.out.println("Rollable Dice this Turn: " + turnRollable);
+//                System.out.println("Rollable Dice this Turn: " + turnRollable);
                 int low = 1;
                 int high = turnRollable.size();
                 int diceNumIndex = r.nextInt(high-low) + low;
                 int diceNum = turnRollable.get(diceNumIndex);
 
-                System.out.println("Dice getting rerolled is: " + diceNum);
+//                System.out.println("Dice getting rerolled is: " + diceNum);
                 rolls.put(dice.get(diceNum),(dice.get(diceNum)).roll());
-                System.out.println( "dice" + diceNum + " " + rolls.get(dice.get(diceNum)));
+//                System.out.println( "dice" + diceNum + " " + rolls.get(dice.get(diceNum)));
                 turnRollable.remove(Integer.valueOf(diceNum));
                 if(rolls.get(dice.get(diceNum))== Faces.SKULL){
                     rollable.remove(Integer.valueOf(diceNum));
                     occurrences++;
-                    System.out.println(rollable);
+//                    System.out.println(rollable);
                 }
             }
 
-            System.out.println("Num skulls: " + occurrences);
-            System.out.println(rollable);
+//            System.out.println("Num skulls: " + occurrences);
+//            System.out.println(rollable);
         }
         for (int i = 1; i<9; i++) {
-            System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
+//            System.out.println( "dice" + i + " " + rolls.get(dice.get(i)));
             results.add(rolls.get(dice.get(i)));
 
         }
