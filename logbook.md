@@ -18,3 +18,10 @@
 - Player randomly chooses if they will be re-rolling or not
 - Player's scores get continually added after each turn
 - Players go back and forth taking turns until one or both reach a score of 6000
+- Created a release for my MVP and then went back and paid technical debt by refining and cleaning up my code
+- Implemented trace mode to have debug outputs that can be hidden 
+- Improved the score method to now calculate combos as well
+
+## 01/01/29
+- Created a new strategy where the player tries to get combos
+- User can now choose which strategy they want each player to be using, through command line arguments 
