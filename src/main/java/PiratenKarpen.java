@@ -33,8 +33,10 @@ public class PiratenKarpen {
                 logger.trace("Player 1 TOTAL score: " + p1Score );
                 logger.trace("Player 2 TOTAL score: " + p2Score);
             }
-
-            if (p1Score >= 6000){
+            if (p1Score >= 6000 && p2Score>= 6000){
+                logger.trace("TIE");
+            }
+            else if (p1Score >= 6000){
                 logger.trace("P1 WIN");
                 p1Wins++;
             }

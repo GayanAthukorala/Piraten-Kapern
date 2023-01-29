@@ -25,7 +25,7 @@ public class Player {
         }
 
         for (int i = 1; i<9;i++){
-            logger.trace( "dice" + i + " " + rolls.get(i));
+//            logger.trace( "dice" + i + " " + rolls.get(i));
             if(rolls.get(i)== Faces.SKULL){
                 rollable.remove(Integer.valueOf(i));
                 occurrences ++;
@@ -37,8 +37,79 @@ public class Player {
             return results;
         }
 
-        results = randomStrategy(occurrences,rolls, rollable, results);
+        results = comboStrategy(occurrences, rolls, results);
+//        results = randomStrategy(occurrences,rolls, rollable, results);
         return results;
+    }
+
+    public ArrayList<Faces> comboStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Faces> results){
+        Logger loggerConfig = LogManager.getRootLogger();
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
+        Dice dice = new Dice();
+        ArrayList<Faces> comboRollable = new ArrayList<Faces>();
+        ArrayList<Integer> rollable = new ArrayList<Integer>();
+
+        for (int i = 1; i<9; i++) {
+            if(!((rolls.get(i)== Faces.GOLD) || (rolls.get(i)== Faces.DIAMOND) || (rolls.get(i)== Faces.SKULL))){
+                comboRollable.add(rolls.get(i));
+
+            }
+        }
+
+        Faces comboFace = null;
+        int mostOccurences = -1;
+        for(Faces face: comboRollable){
+            int faceFrequency = (Collections.frequency(comboRollable,face));
+            if (faceFrequency>mostOccurences){
+                mostOccurences = faceFrequency;
+                comboFace = face;
+            }
+        }
+        logger.trace(comboFace);
+
+//        for (int i = 1; i<9; i++) {
+//            if(((rolls.get(i)== comboFace))){
+//                comboRollable.remove(rolls.get(i));
+//            }
+//        }
+
+        for (int i = 1; i<9; i++) {
+            if(!((rolls.get(i)== Faces.GOLD) || (rolls.get(i)== Faces.DIAMOND) || (rolls.get(i)== Faces.SKULL) || (rolls.get(i)== comboFace))){
+                rollable.add(i);
+            }
+        }
+        logger.trace(rollable);
+
+
+        while ((rollable.size()>1) &&(occurrences<3) && (mostOccurences <3)){
+            for(int i = 0; i < rollable.size(); i++){
+                int diceNum = rollable.get(i);
+                logger.trace("Dice is " + rolls.get(diceNum));
+                rolls.put(diceNum, dice.roll());
+                logger.trace(rolls.get(diceNum));
+            }
+            for(int i = 0; i < rollable.size(); i++){
+                int diceNum = rollable.get(i);
+                if (rolls.get(diceNum) == Faces.SKULL){
+                    occurrences++;
+                    rollable.remove(i);
+                }
+                else if (rolls.get(diceNum) == comboFace){
+                    mostOccurences++;
+                    rollable.remove(i);
+                }
+            }
+        }
+
+        if (occurrences<3){
+            for (int i = 1; i<9; i++) {
+                logger.trace( "dice" + i + " " + rolls.get(i));
+                results.add(rolls.get(i));
+            }
+
+        }
+        return results;
+
     }
 
     public ArrayList<Faces> randomStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Integer> rollable, ArrayList<Faces> results){
@@ -89,7 +160,7 @@ public class Player {
         HashMap<Integer, Integer> combos = new HashMap<Integer, Integer>();
         combos.put(1,0);
         combos.put(2,0);
-        combos.put(3, 100);
+        combos.put(3,100);
         combos.put(4,200);
         combos.put(5,500);
         combos.put(6,1000);
@@ -100,7 +171,6 @@ public class Player {
             if((results.get(i)== Faces.GOLD) || (results.get(i)== Faces.DIAMOND)){
                 score += 100;
             }
-
         }
 
         for(Faces face: results){
