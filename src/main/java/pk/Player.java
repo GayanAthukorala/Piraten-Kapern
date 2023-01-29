@@ -85,13 +85,28 @@ public class Player {
 
     }
 
-    public int score(ArrayList results){
+    public int score(ArrayList<Faces> results){
+        HashMap<Integer, Integer> combos = new HashMap<Integer, Integer>();
+        combos.put(1,0);
+        combos.put(2,0);
+        combos.put(3, 100);
+        combos.put(4,200);
+        combos.put(5,500);
+        combos.put(6,1000);
+        combos.put(7,2000);
+        combos.put(8,4000);
         int score = 0;
         for (int i = 0; i<results.size(); i++) {
             if((results.get(i)== Faces.GOLD) || (results.get(i)== Faces.DIAMOND)){
                 score += 100;
             }
+
         }
+
+        for(Faces face: results){
+            score += combos.get(Collections.frequency(results,face));
+        }
+
         return score;
     }
 
