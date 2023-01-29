@@ -48,4 +48,6 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |  x   | F14 |                  Calculate score including combos                  |   D    | 01/01/28 | 01/01/28  |
 |  x   | F15 |           Player tries to maximize combos as a strategy            |   D    | 01/01/28 | 01/01/29  |
 |  x   | F16 | User is able to select which strategy they want the players to use |   D    | 01/01/29 | 01/01/29  |
+|  x   | F17 |               Add cards that the user can draw from                |   S    | 01/01/29 |           |
+|  x   | F18 |        New player strategy if they draw the Sea Battle card        | B(F17) |          |           |
 
