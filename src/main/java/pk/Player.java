@@ -10,7 +10,7 @@ import org.apache.logging.log4j.core.config.Configurator;
 
 public class Player {
     private static final Logger logger = LogManager.getLogger(Player.class);
-    public ArrayList turn(){
+    public ArrayList turn( String strategy){
         Logger loggerConfig = LogManager.getRootLogger();
         Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
         ArrayList<Faces> results = new ArrayList<Faces>();
@@ -37,8 +37,13 @@ public class Player {
             return results;
         }
 
-        results = comboStrategy(occurrences, rolls, results);
-//        results = randomStrategy(occurrences,rolls, rollable, results);
+        if (strategy.equals("random")){
+            results = randomStrategy(occurrences,rolls, rollable, results);
+
+        }
+        else if (strategy.equals("combo")){
+            results = comboStrategy(occurrences, rolls, results);
+        }
         return results;
     }
 

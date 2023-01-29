@@ -12,7 +12,7 @@ import java.util.*;
 public class PiratenKarpen {
 
     private static final Logger logger = LogManager.getLogger(PiratenKarpen.class);
-    public static void runGame(Player player1, Player player2){
+    public static void runGame(String[] args,Player player1, Player player2){
         Logger loggerConfig = LogManager.getRootLogger();
         Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
         float p1Wins = 0;
@@ -23,9 +23,9 @@ public class PiratenKarpen {
             logger.trace("Welcome to Piraten Karpen Simulator!");
             while ((p1Score <6000) && (p2Score <6000)){
                 logger.trace("Player 1----------------");
-                ArrayList p1Rolls = player1.turn();
+                ArrayList p1Rolls = player1.turn(args[0]);
                 logger.trace("Player 2----------------");
-                ArrayList p2Rolls = player2.turn();
+                ArrayList p2Rolls = player2.turn(args[1]);
                 logger.trace("Player 1 Score: " + player1.score(p1Rolls));
                 logger.trace("Player 2 Score: " + player2.score(p2Rolls));
                 p1Score += player1.score(p1Rolls);
@@ -62,7 +62,7 @@ public class PiratenKarpen {
     public static void main(String[] args) {
         Player player1 = new Player();
         Player player2 = new Player();
-        runGame(player1, player2);
+        runGame(args, player1, player2);
     }
 
     
