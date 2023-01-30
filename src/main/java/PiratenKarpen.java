@@ -17,7 +17,7 @@ public class PiratenKarpen {
         Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("TRACE"));
         float p1Wins = 0;
         float p2Wins = 0;
-        for (int i = 0; i<1; i++) {
+        for (int i = 0; i<42; i++) {
             ArrayList<Card> deck = cards.deck();
             int p1Score = 0;
             int p2Score = 0;

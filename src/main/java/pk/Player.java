@@ -27,7 +27,7 @@ public class Player {
         }
 
         for (int i = 1; i<9;i++){
-//            logger.trace( "dice" + i + " " + rolls.get(i));
+            logger.trace( "dice" + i + " " + rolls.get(i));
             if(rolls.get(i)== Faces.SKULL){
                 rollable.remove(Integer.valueOf(i));
                 occurrences ++;
@@ -39,20 +39,19 @@ public class Player {
             return score;
         }
 
-        Random r = new Random();
-        int cardIndex = r.nextInt(35);
         if (drawnCard.type.equals("SeaBattle")){
-            System.out.println("SEA BATTLE");
+            logger.trace("SEA BATTLE==========================================================================");
             score = seaBattleStrategy(occurrences,rolls,results, drawnCard.numRolls, drawnCard.bonus);
 
         }
 
-
         else if (strategy.equals("random")){
+            logger.trace("RANDOM==========================================================================");
             score = randomStrategy(occurrences,rolls, rollable, results);
 
         }
         else if (strategy.equals("combo")){
+            logger.trace("COMBO==========================================================================");
             score = comboStrategy(occurrences, rolls, results);
         }
         return score;
@@ -66,7 +65,6 @@ public class Player {
         int saberOccurrences = 0;
         logger.trace("Num of needed sabers is: " + saberRolls);
         for (int i = 1; i<9; i++) {
-            logger.trace(rolls.get(i));
             if (rolls.get(i) ==Faces.SABER){
                 saberOccurrences++;
             }
@@ -76,12 +74,13 @@ public class Player {
             }
         }
         while ((rollable.size()>1) &&(occurrences<3) && (saberOccurrences < saberRolls)){
+            logger.trace("re-rolling");
             for(int i = 0; i < rollable.size(); i++){
+                logger.trace("Re-roll dice!");
                 int diceNum = rollable.get(i);
                 logger.trace("Dice " + diceNum + " " + rolls.get(diceNum));
                 rolls.put(diceNum, dice.roll());
-                logger.trace(rolls.get(diceNum));
-                System.out.println("Next dice!");
+                logger.trace("Re-Rolled to " +rolls.get(diceNum));
             }
             for(int i = rollable.size()-1; i >=0; i--){
                 int diceNum = rollable.get(i);
@@ -94,9 +93,9 @@ public class Player {
                     rollable.remove(i);
                 }
             }
-            logger.trace("reroll");
 
         }
+        logger.trace("Num Sabers " + saberOccurrences);
         logger.trace("Num skulls " + occurrences);
 
         int turnScore;
@@ -126,9 +125,8 @@ public class Player {
         ArrayList<Integer> rollable = new ArrayList<Integer>();
 
         for (int i = 1; i<9; i++) {
-            if(!((rolls.get(i)== Faces.GOLD) || (rolls.get(i)== Faces.DIAMOND) || (rolls.get(i)== Faces.SKULL))){
+            if(!((rolls.get(i)== Faces.SKULL))){
                 comboRollable.add(rolls.get(i));
-
             }
         }
 
@@ -256,10 +254,7 @@ public class Player {
 
 
         for(Faces face: Faces.values()){
-            logger.trace(face);
-            logger.trace(Collections.frequency(results,face));
             score += combos.get(Collections.frequency(results,face));
-            logger.trace(score);
         }
         score += bonus;
 
