@@ -47,12 +47,12 @@ public class Player {
 
         else if (strategy.equals("random")){
             logger.trace("RANDOM==========================================================================");
-            score = randomStrategy(occurrences,rolls, rollable, results);
+            score = randomStrategy(occurrences,rolls, rollable, results, drawnCard.type);
 
         }
         else if (strategy.equals("combo")){
             logger.trace("COMBO==========================================================================");
-            score = comboStrategy(occurrences, rolls, results);
+            score = comboStrategy(occurrences, rolls, results, drawnCard.type);
         }
         return score;
     }
@@ -117,7 +117,7 @@ public class Player {
 
     }
 
-    public int comboStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Faces> results){
+    public int comboStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Faces> results, String card){
         Logger loggerConfig = LogManager.getRootLogger();
         Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("TRACE"));
         Dice dice = new Dice();
@@ -129,7 +129,6 @@ public class Player {
                 comboRollable.add(rolls.get(i));
             }
         }
-
 
 
         Faces comboFace = null;
@@ -177,20 +176,20 @@ public class Player {
             }
         }
 
+
         if (occurrences<3){
             for (int i = 1; i<9; i++) {
                 logger.trace( "dice" + i + " " + rolls.get(i));
                 results.add(rolls.get(i));
             }
-
-
         }
+
         int score = score(results, 0);
         return score;
 
     }
 
-    public int randomStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Integer> rollable, ArrayList<Faces> results){
+    public int randomStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Integer> rollable, ArrayList<Faces> results, String card){
         Logger loggerConfig = LogManager.getRootLogger();
         Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("TRACE"));
         Dice dice = new Dice();
@@ -251,7 +250,6 @@ public class Player {
                 score += 100;
             }
         }
-
 
         for(Faces face: Faces.values()){
             score += combos.get(Collections.frequency(results,face));
