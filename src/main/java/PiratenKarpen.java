@@ -11,10 +11,10 @@ import java.util.*;
 public class PiratenKarpen {
 
     private static final Logger logger = LogManager.getLogger(PiratenKarpen.class);
-    public static void runGame(Player player1, Player player2){
+    public static void runGame(String[] args, Player player1, Player player2){
         Cards cards = new Cards();
         Logger loggerConfig = LogManager.getRootLogger();
-        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("TRACE"));
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
         float p1Wins = 0;
         float p2Wins = 0;
         for (int i = 0; i<42; i++) {
@@ -28,12 +28,12 @@ public class PiratenKarpen {
                 }
                 Card drawnCard = cards.draw(deck);
                 deck.remove(drawnCard);
-                System.out.println("Player 1----------------");
-                int p1TurnScore = player1.turn("random", drawnCard);
-                System.out.println("Player 2----------------");
-                int p2TurnScore = player2.turn("combo", drawnCard);
-                System.out.println("Player 1 Score: " + p1TurnScore);
-                System.out.println("Player 2 Score: " + p2TurnScore);
+                logger.trace("Player 1----------------");
+                int p1TurnScore = player1.turn(args[0], drawnCard);
+                logger.trace("Player 2----------------");
+                int p2TurnScore = player2.turn(args[1], drawnCard);
+                logger.trace("Player 1 Score: " + p1TurnScore);
+                logger.trace("Player 2 Score: " + p2TurnScore);
                 p1Score += (p1TurnScore);
                 p2Score += (p2TurnScore);
                 logger.trace("Player 1 TOTAL score: " + p1Score );
@@ -68,7 +68,7 @@ public class PiratenKarpen {
     public static void main(String[] args) {
         Player player1 = new Player();
         Player player2 = new Player();
-        runGame(player1, player2);
+        runGame(args, player1, player2);
     }
 
 

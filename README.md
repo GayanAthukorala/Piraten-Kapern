@@ -21,6 +21,9 @@
 
 Remark: **We are assuming here you are using a _real_ shell (e.g., anything but PowerShell on Windows)**
 
+## Decisions and Assumptions
+* If both players get above 6000 points on a turn, it is considered a tie, and neither get a point added to their win count
+
 ## Feature Backlog
 
  * Status: 
@@ -51,5 +54,5 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |  x   | F17 |               Add cards that the user can draw from                |   D    |  01/01/29  | 01/01/29  |
 |  x   | F18 |        New player strategy if they draw the Sea Battle card        |   D    |  01/01/29  | 01/01/29  |
 |  x   | F19 |               Add monkey business card to card deck                |   D    |  01/01/29  | 01/01/29  |
-|  x   | F20 |       Create new scoring method for the monkey business card       |   P    |  01/01/29  |           |
+|  x   | F20 |       Create new scoring method for the monkey business card       |   D    |  01/01/29  | 01/01/29  |
 
