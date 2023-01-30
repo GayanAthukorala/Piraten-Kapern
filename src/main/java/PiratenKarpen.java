@@ -1,8 +1,7 @@
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
-import pk.Dice;
-import pk.Faces;
-import pk.Player;
+import pk.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import javax.swing.plaf.basic.BasicListUI;
@@ -12,24 +11,31 @@ import java.util.*;
 public class PiratenKarpen {
 
     private static final Logger logger = LogManager.getLogger(PiratenKarpen.class);
-    public static void runGame(String[] args,Player player1, Player player2){
+    public static void runGame(Player player1, Player player2){
+        Cards cards = new Cards();
         Logger loggerConfig = LogManager.getRootLogger();
-        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("TRACE"));
         float p1Wins = 0;
         float p2Wins = 0;
-        for (int i = 0; i<42; i++) {
+        for (int i = 0; i<1; i++) {
+            ArrayList<Card> deck = cards.deck();
             int p1Score = 0;
             int p2Score = 0;
             logger.trace("Welcome to Piraten Karpen Simulator!");
             while ((p1Score <6000) && (p2Score <6000)){
-                logger.trace("Player 1----------------");
-                ArrayList p1Rolls = player1.turn(args[0]);
-                logger.trace("Player 2----------------");
-                ArrayList p2Rolls = player2.turn(args[1]);
-                logger.trace("Player 1 Score: " + player1.score(p1Rolls));
-                logger.trace("Player 2 Score: " + player2.score(p2Rolls));
-                p1Score += player1.score(p1Rolls);
-                p2Score += player2.score(p2Rolls);
+                if (deck.size() ==0 ){
+                    deck = cards.deck();
+                }
+                Card drawnCard = cards.draw(deck);
+                deck.remove(drawnCard);
+                System.out.println("Player 1----------------");
+                int p1TurnScore = player1.turn("random", drawnCard);
+                System.out.println("Player 2----------------");
+                int p2TurnScore = player2.turn("combo", drawnCard);
+                System.out.println("Player 1 Score: " + p1TurnScore);
+                System.out.println("Player 2 Score: " + p2TurnScore);
+                p1Score += (p1TurnScore);
+                p2Score += (p2TurnScore);
                 logger.trace("Player 1 TOTAL score: " + p1Score );
                 logger.trace("Player 2 TOTAL score: " + p2Score);
             }
@@ -62,8 +68,10 @@ public class PiratenKarpen {
     public static void main(String[] args) {
         Player player1 = new Player();
         Player player2 = new Player();
-        runGame(args, player1, player2);
+        runGame(player1, player2);
     }
 
-    
+
 }
+
+

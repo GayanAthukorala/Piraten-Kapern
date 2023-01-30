@@ -1,5 +1,6 @@
 package pk;
 
+import java.awt.*;
 import java.sql.SQLOutput;
 import java.util.*;
 
@@ -10,9 +11,10 @@ import org.apache.logging.log4j.core.config.Configurator;
 
 public class Player {
     private static final Logger logger = LogManager.getLogger(Player.class);
-    public ArrayList turn( String strategy){
+    public int turn( String strategy, Card drawnCard){
+        int score = 0;
         Logger loggerConfig = LogManager.getRootLogger();
-        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("TRACE"));
         ArrayList<Faces> results = new ArrayList<Faces>();
         Dice dice = new Dice();
         int occurrences = 0;
@@ -34,22 +36,91 @@ public class Player {
 
         if(occurrences >= 3){
             logger.trace("Game Over");
-            return results;
+            return score;
         }
 
-        if (strategy.equals("random")){
-            results = randomStrategy(occurrences,rolls, rollable, results);
+        Random r = new Random();
+        int cardIndex = r.nextInt(35);
+        if (drawnCard.type.equals("SeaBattle")){
+            System.out.println("SEA BATTLE");
+            score = seaBattleStrategy(occurrences,rolls,results, drawnCard.numRolls, drawnCard.bonus);
+
+        }
+
+
+        else if (strategy.equals("random")){
+            score = randomStrategy(occurrences,rolls, rollable, results);
 
         }
         else if (strategy.equals("combo")){
-            results = comboStrategy(occurrences, rolls, results);
+            score = comboStrategy(occurrences, rolls, results);
         }
-        return results;
+        return score;
     }
 
-    public ArrayList<Faces> comboStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Faces> results){
+    public int seaBattleStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Faces> results, int saberRolls, int bonus){
         Logger loggerConfig = LogManager.getRootLogger();
-        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("TRACE"));
+        Dice dice = new Dice();
+        ArrayList<Integer> rollable = new ArrayList<Integer>();
+        int saberOccurrences = 0;
+        logger.trace("Num of needed sabers is: " + saberRolls);
+        for (int i = 1; i<9; i++) {
+            logger.trace(rolls.get(i));
+            if (rolls.get(i) ==Faces.SABER){
+                saberOccurrences++;
+            }
+
+            if(!((rolls.get(i)== Faces.SABER) || (rolls.get(i)== Faces.SKULL))){
+                rollable.add(i);
+            }
+        }
+        while ((rollable.size()>1) &&(occurrences<3) && (saberOccurrences < saberRolls)){
+            for(int i = 0; i < rollable.size(); i++){
+                int diceNum = rollable.get(i);
+                logger.trace("Dice " + diceNum + " " + rolls.get(diceNum));
+                rolls.put(diceNum, dice.roll());
+                logger.trace(rolls.get(diceNum));
+                System.out.println("Next dice!");
+            }
+            for(int i = rollable.size()-1; i >=0; i--){
+                int diceNum = rollable.get(i);
+                if (rolls.get(diceNum) == Faces.SKULL){
+                    occurrences++;
+                    rollable.remove(i);
+                }
+                else if (rolls.get(diceNum) == Faces.SABER){
+                    saberOccurrences++;
+                    rollable.remove(i);
+                }
+            }
+            logger.trace("reroll");
+
+        }
+        logger.trace("Num skulls " + occurrences);
+
+        int turnScore;
+        if (occurrences<3){
+            for (int i = 1; i<9; i++) {
+                logger.trace( "dice" + i + " " + rolls.get(i));
+                results.add(rolls.get(i));
+            }
+            turnScore = score(results, bonus);
+        }
+
+        else{
+            turnScore = score(results, -1*bonus);
+        }
+
+        return turnScore;
+
+
+
+    }
+
+    public int comboStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Faces> results){
+        Logger loggerConfig = LogManager.getRootLogger();
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("TRACE"));
         Dice dice = new Dice();
         ArrayList<Faces> comboRollable = new ArrayList<Faces>();
         ArrayList<Integer> rollable = new ArrayList<Integer>();
@@ -60,6 +131,8 @@ public class Player {
 
             }
         }
+
+
 
         Faces comboFace = null;
         int mostOccurences = -1;
@@ -93,7 +166,7 @@ public class Player {
                 rolls.put(diceNum, dice.roll());
                 logger.trace(rolls.get(diceNum));
             }
-            for(int i = 0; i < rollable.size(); i++){
+            for(int i = rollable.size()-1; i >=0; i--){
                 int diceNum = rollable.get(i);
                 if (rolls.get(diceNum) == Faces.SKULL){
                     occurrences++;
@@ -112,14 +185,16 @@ public class Player {
                 results.add(rolls.get(i));
             }
 
+
         }
-        return results;
+        int score = score(results, 0);
+        return score;
 
     }
 
-    public ArrayList<Faces> randomStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Integer> rollable, ArrayList<Faces> results){
+    public int randomStrategy(int occurrences, HashMap<Integer, Faces> rolls, ArrayList<Integer> rollable, ArrayList<Faces> results){
         Logger loggerConfig = LogManager.getRootLogger();
-        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
+        Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("TRACE"));
         Dice dice = new Dice();
         Random r = new Random();
         while (occurrences<3){
@@ -131,7 +206,7 @@ public class Player {
                     logger.trace( "dice" + i + " " + rolls.get(i));
                     results.add(rolls.get(i));
                 }
-                return results;
+                return score(results, 0);
             }
 
             logger.trace("Re-rolling");
@@ -157,11 +232,11 @@ public class Player {
 //            System.out.println(rollable);
         }
         logger.trace("Busted!");
-        return results;
+        return score(results, 0);
 
     }
 
-    public int score(ArrayList<Faces> results){
+    public int score(ArrayList<Faces> results, int bonus){
         HashMap<Integer, Integer> combos = new HashMap<Integer, Integer>();
         combos.put(0,0);
         combos.put(1,0);
@@ -176,13 +251,17 @@ public class Player {
         for (int i = 0; i<results.size(); i++) {
             if((results.get(i)== Faces.GOLD) || (results.get(i)== Faces.DIAMOND)){
                 score += 100;
-                logger.trace(score);
             }
         }
 
+
         for(Faces face: Faces.values()){
+            logger.trace(face);
+            logger.trace(Collections.frequency(results,face));
             score += combos.get(Collections.frequency(results,face));
+            logger.trace(score);
         }
+        score += bonus;
 
         return score;
     }
