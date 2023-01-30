@@ -21,8 +21,10 @@
 
 Remark: **We are assuming here you are using a _real_ shell (e.g., anything but PowerShell on Windows)**
 
-## Decisions and Assumptions
+## Decisions and Assumptions for Unspecified Details
 * If both players get above 6000 points on a turn, it is considered a tie, and neither get a point added to their win count
+* When the player's strategy is random, there is a 50% chance they will choose not to roll and end their turn, and a 50% chance they will randomly re-roll
+* For the combo strategy, the player does not re-roll any gold or diamond dice, and will stop re-rolling once they get a combo of over 3, or get 3 or more skulls
 
 ## Feature Backlog
 

@@ -109,7 +109,7 @@ public class Player {
         logger.trace("Num Sabers " + saberOccurrences);
         logger.trace("Num skulls " + occurrences);
 
-        //calculating the player's score
+        //calculating the player's score, if the player rolled 3 skulls they get no points and lose however many points they would have won from Sea Battle
         int turnScore;
         if (occurrences<3){
             for (int i = 1; i<9; i++) {
@@ -172,7 +172,7 @@ public class Player {
                 rolls.put(diceNum, dice.roll());
                 logger.trace(rolls.get(diceNum));
             }
-            //removing dice that roll skull or the face we are trying to get a combo for from the list of dice we can re-roll
+            //removing dice that roll skull or the face the player is trying to get a combo for from the list of dice we can re-roll
             for(int i = rollable.size()-1; i >=0; i--){
                 int diceNum = rollable.get(i);
                 if (rolls.get(diceNum) == Faces.SKULL){
@@ -196,7 +196,7 @@ public class Player {
         }
 
 
-        //changes Parrots to Monkeys, as they are treated the same if the player draws the Monkey Business card
+        //changes Parrots to Monkeys, as they are treated the same in scoring if the player draws the Monkey Business card
         if (card.equals("MonkeyBusiness")){
             logger.trace("MONKEY==========================================================");
             for (int i =0; i<results.size();i++){
@@ -205,6 +205,7 @@ public class Player {
                 }
             }
         }
+        //determines score based on rolls, if the player rolled 3 skulls, the results ArrayList will be empty and they will get a score of 0
         int score = score(results, 0);
         return score;
 
@@ -215,8 +216,11 @@ public class Player {
         Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));
         Dice dice = new Dice();
         Random r = new Random();
+
+        //re-rolling
         while (occurrences<3){
-            int reRoll = r.nextInt(2);
+            int reRoll = r.nextInt(2);//Player choosing to re-roll or not
+            //if the player chooses not to re-roll their score is calculated based on their current dice
             if (reRoll == 0){
                 logger.trace("Results:");
                 logger.trace("--------");
@@ -224,6 +228,8 @@ public class Player {
                     logger.trace( "dice" + i + " " + rolls.get(i));
                     results.add(rolls.get(i));
                 }
+
+                //changes Parrots to Monkeys, as they are treated the same in scoring if the player draws the Monkey Business card
                 if (card.equals("MonkeyBusiness")){
                     logger.trace("MONKEY==========================================================");
                     for (int i =0; i<results.size();i++){
@@ -238,6 +244,7 @@ public class Player {
             logger.trace("Re-rolling");
             ArrayList<Integer> turnRollable = (ArrayList)rollable.clone();
 
+            //if player chooses to re-roll
             int numRolls = r.nextInt(rollable.size()-2) + 2;
             for (int i = 0; i < numRolls; i++){
                 int low = 1;
@@ -255,11 +262,13 @@ public class Player {
             }
         }
         logger.trace("Busted!");
+        //this is only ran if the player gets 3 skulls, and they will get a score of 0, as results will be an empty ArrayList
         return score(results, 0);
 
     }
 
     public int score(ArrayList<Faces> results, int bonus){
+        //corresponding bonus for each combo
         HashMap<Integer, Integer> combos = new HashMap<Integer, Integer>();
         combos.put(0,0);
         combos.put(1,0);
@@ -271,15 +280,19 @@ public class Player {
         combos.put(7,2000);
         combos.put(8,4000);
         int score = 0;
+        //adding to score for gold and diamonds
         for (int i = 0; i<results.size(); i++) {
             if((results.get(i)== Faces.GOLD) || (results.get(i)== Faces.DIAMOND)){
                 score += 100;
             }
         }
 
+        //adding to score for combos
         for(Faces face: Faces.values()){
             score += combos.get(Collections.frequency(results,face));
         }
+
+        //adding to score for bonus
         score += bonus;
 
         return score;
