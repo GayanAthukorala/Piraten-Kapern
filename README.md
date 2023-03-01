@@ -1,7 +1,7 @@
 # A1 - Piraten Karpen
 
   * Author: Gayan Athukorala
-  * Email: athukorg@mcmaster.ca
+  * Email: gayan42004@gmail.com
 
 ## Build and Execution
 
@@ -19,7 +19,6 @@
     * To enable Trace mode change `"ERROR` in `Configurator.setAllLevels(loggerConfig.getName(), Level.getLevel("ERROR"));`, which is at the top of every method that uses trace, to `"TRACE`
 
 
-Remark: **We are assuming here you are using a _real_ shell (e.g., anything but PowerShell on Windows)**
 
 ## Decisions and Assumptions for Unspecified Details
 * If both players get above 6000 points on a turn, it is considered a tie, and neither get a point added to their win count
